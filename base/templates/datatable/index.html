@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+{% extends 'datatable/base.html' %}
+{% block body %}
+{% if user.is_authenticated %}
+</head>
+<body>
+<table id = "table" class = "table table-bordered">
+    <thead class="alert-warning">
+        <tr>
+            <!--<th>ID</th>-->
+            <th>ServerName</th>
+            <th>Name</th>
+            <th>State</th>
+            <th>Bindings</th>
+            <th>Created</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for sites in All_items %}
+            <tr>
+                <!--<td>{{ sites.id }}</td>-->
+                <td>{{ sites.ServerName}}</td>
+                <td>{{ sites.Name }}</td>
+                <td>{{ sites.State }}</td>
+                <td>{{ sites.Bindings  }}</td>
+                <td>{{ sites.Created  }}</td>
+                </tr>
+            {% endfor %}
+         </tbody>
+     </table>
+{% else %}
+	<h1>Sorry! You Must Be Logged In To View This Page...</h1>
+{% endif %}    
+{% endblock %}
+</body>
+</html>
+    
+
+ 

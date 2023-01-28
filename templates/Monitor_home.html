@@ -1,0 +1,40 @@
+{% extends 'datatable/base.html' %}
+
+{% block body %}
+{% if user.is_authenticated %}
+<h3>Sites List</h3>
+
+<html>
+  <body> 
+    <table class="table table-striped w-auto">
+      <tr style="width: 200px; margin-top: 5px !important;" class="table-info text-center p-3 mb-2 bg-gradient-light text-dark" >
+        <th>Monitor Site List</th>  
+        <th>Status</th>  
+      </tr>
+      <tr class="table-info">
+        <td>
+          {% for s in Token_Data %}
+          <form action= "{% url 'Monitor_search' %} " method="put">
+            <input type ="hidden" name="Name" id="sev" value="{{s.Name}}"/>
+            <button style="width: 200px; margin-top: 5px !important;" class="btn btn-light" id ="mp" type="submit">{{s.Name}}</button>             
+          </form>
+          {% endfor %}
+        </td>
+        <td>
+          {% for s in Token_Data %}
+          <form action= "{% url 'Monitor_search' %} " method="put">
+            <button style="width: 200px; margin-top: 5px !important;" class="btn btn-light" id ="mp" type="submit">{{s.Notifications}}</button>             
+          </form>
+          {% endfor %}
+        </td>
+      </tr>
+      
+    </table>
+    
+
+  </body>
+  </html>
+{% else %}
+	<h1>Sorry! You Must Be Logged In To View This Page...</h1>
+{% endif %}    
+{% endblock %}

@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+{% extends 'datatable/base.html' %}
+{% block body %}
+{% if user.is_authenticated %}
+</head>
+  <body>
+  <table id = "table" class = "table table-bordered">
+        <thead class="alert-warning">
+          <tr>
+           <th scope="col">Server Name</th>
+            <th scope="col">Name</th>
+            <th scope="col">State</th>
+            <th scope="col">Notifications</th>
+            <th scope="col">Monitor</th>
+            <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+          {% for mades in mToken_Data %}
+            <tr>
+                <td>{{ mades.ServerName}}</td>
+                <td>{{ mades.Name }}</td>
+                <td>{{ mades.State }}</td>
+                <td>{{ mades.Notifications}}</td>
+                <td><a href="{% url 'updateUser' mades.MonitorId %}"><button type='button' class='btn btn-info'>{{ mades.Monitor }}</button></a></td>
+                <td><a href="{% url 'deleteUser' mades.MonitorId %}"><button type='button' class='btn btn-danger'>Delete</button></a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+      </table>
+      {% else %}
+	<h1>Sorry! You Must Be Logged In To View This Page...</h1>
+{% endif %}    
+{% endblock %}
+</body>
+</html>

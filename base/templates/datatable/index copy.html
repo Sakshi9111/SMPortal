@@ -1,0 +1,52 @@
+{% extends 'datatable/base.html' %}
+
+{% block body %}
+{% if user.is_authenticated %}
+<table id = "table" class = "table table-bordered">
+    <thead class="alert-warning">
+        <tr>
+            <!--<th>ID</th>-->
+            <th>ServerName</th>
+            <th>Name</th>
+            <th>State</th>
+            <th>Bindings</th>
+            <th>Created</th>
+            <th>Status</th>
+            
+
+        </tr>
+    </thead>
+    <tbody>
+        {% for sites in All_items %}
+        <tr>
+            <!--<td>{{ sites.id }}</td>-->
+            <td>{{ sites.ServerName}}</td>
+            <td>{{ sites.Name }}</td>
+            <td>{{ sites.State }}</td>
+            <td>{{ sites.Bindings  }}</td>
+            <td>{{ sites.Created  }}</td>
+            <td> 
+               
+            
+                {% if sites.State == 'Stopped'%}
+                
+                <label>Wanna monitor this site</label>
+                <label class="switch">
+                    <input type="checkbox" href="">
+                    <span class="slider round"></span>
+                </label>
+                {%else%}
+                
+                {%endif%}
+            </td>
+        </tr>
+        
+        {% endfor %}
+    </tbody>
+</table>
+
+
+{% else %}
+	<h1>Sorry! You Must Be Logged In To View This Page...</h1>
+{% endif %}    
+{% endblock %}

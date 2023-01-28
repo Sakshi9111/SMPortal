@@ -1,0 +1,76 @@
+{% extends 'datatable/base.html' %}
+
+{% block body %}
+{% if user.is_authenticated %}
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>Monitor List</title>
+  </head>
+  <body>
+    <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Monitor ID</th>
+            <th scope="col">Server Name</th>
+            <th scope="col">Name</th>
+            <th scope="col">State</th>
+            
+            <th scope="col">Notifications</th>
+            <th scope="col">Monitor</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+
+          </tr>
+        </thead>
+        <tbody id="displa">
+        </tbody>
+      </table>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function(){
+            setInterval(function(){
+
+        $.ajax({
+            type:'GET',
+            url : "{% url 'getUsers' %}",
+            success: function(response){
+            $("#displa").empty();
+            for (var key in response.users){
+                console.log(response.users[key].userId);
+                var temp="<tr><th scope='row'>"+response.users[key].monitorId+"</th><td>"+response.users[key].server_name+"</td><td>"
+                  +response.users[key].name+"</td><td>"
+
+                    +response.users[key].state+"</td><td>"
+
+                        +response.users[key].notifications+"</td><td><a href='updateUser/"
+                          +response.users[key].monitorId+"'><button type='button' class='btn btn-info'>"+response.users[key].monitorId+"</button></a></td><td><a href='deleteUser/"
+                            +response.users[key].monitorId+"'><button type='button' class='btn btn-danger'>Delete</button></a></td><td>"
+                          "</td></tr>";
+
+                $("#displa").append(temp);
+            }
+                
+
+            },
+            error: function(response){
+                alert("No DATA FOUND");
+            }
+        });
+            }, 1000);
+        });
+    </script>
+  </body>
+</html>
+{% else %}
+	<h1>Sorry! You Must Be Logged In To View This Page...</h1>
+{% endif %}    
+{% endblock %}

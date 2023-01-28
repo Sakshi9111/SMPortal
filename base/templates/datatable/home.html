@@ -1,0 +1,49 @@
+{% extends 'datatable/base.html' %}
+
+{% block body %}
+{% if user.is_authenticated %}
+<h3>Server Table</h3>
+
+<html>
+  <body> 
+    <table class="table table-striped w-auto">
+      <tr style="width: 200px; margin-top: 5px !important;" class="table-info text-center p-3 mb-2 bg-gradient-light text-dark" >
+        <th>SERVER</th>  
+        <th>IP</th>  
+        <th>Monitor</th> 
+      </tr>
+      <tr class="table-info">
+        <td>
+          {% for s in Token_Data %}
+          <form action= "{% url 'search' %} " method="get">
+            <input type ="hidden" name="server" id="sev" value="{{s.server_name}}"/>
+            <button style="width: 200px; margin-top: 5px !important;" class="btn btn-light" id ="mp" type="submit">{{s.server_name}}</button>             
+          </form>
+          {% endfor %}
+        </td>
+        <td>
+          {% for s in Token_Data %}
+          <form >
+            <button style="width: 200px; margin-top: 5px !important;" class="btn btn-light" id ="mp">{{s.ip}}</button>             
+          </form>
+          {% endfor %}
+        </td>
+        <td>
+         
+          <form action= "{% url 'getList' %} " method="get">
+            <button style="width: 200px; margin-top: 5px !important;" class="btn btn-light" id ="mp" type="submit">Monitor List</button>             
+          </form>
+         
+          
+        </td> 
+      </tr>
+      
+    </table>
+    
+
+  </body>
+  </html>
+{% else %}
+	<h1>Sorry! You Must Be Logged In To View This Page...</h1>
+{% endif %}    
+{% endblock %}

@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+{% extends 'datatable/base.html' %}
+{% block body %}
+{% if user.is_authenticated %}
+  <title>Monitor List</title>
+</head>
+  <body>
+    <table id = "table" class = "table table-bordered">
+      <thead class="alert-warning">
+          <tr>
+            <th scope="col">Monitor ID</th>
+            <th scope="col">Server Name</th>
+            <th scope="col">Name</th>
+            <th scope="col">State</th>
+            <th scope="col">Notifications</th>
+            <th scope="col">Monitor</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody id="displa">
+        </tbody>
+      </table>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function(){
+            setInterval(function(){
+        $.ajax({
+            type:'GET',
+            url : "{% url 'getUsers' %}",
+            success: function(response){
+            $("#displa").empty();
+            for (var key in response.users){
+                console.log(response.users[key].userId);
+                var temp="<tr><th scope='row'>"+response.users[key].MonitorId+"</th><td>"+response.users[key].ServerName+"</td><td>"
+                  +response.users[key].Name+"</td><td>"
+                    +response.users[key].State+"</td><td>"
+                        +response.users[key].Notifications+"</td><td><a href='updateUser/"
+                          +response.users[key].MonitorId+"'><button type='button' class='btn btn-info'>"+response.users[key].Monitor+"</button></a></td><td><a href='deleteUser/"
+                            +response.users[key].MonitorId+"'><button type='button' class='btn btn-danger'>Delete</button></a></td><td>"
+                          "</td></tr>";
+                    $("#displa").append(temp);
+                  }
+            },
+            error: function(response){
+                alert("No DATA FOUND");
+            }
+        });
+            }, 1000);
+        });
+    </script>
+    {% else %}
+	  <h1>Sorry! You Must Be Logged In To View This Page...</h1>
+    {% endif %}    
+    {% endblock %}
+  </body>
+</html>
